@@ -1,5 +1,5 @@
 from langgraph.graph import StateGraph, START, END
-from langchain_core.messages import BaseMessage
+from langchain_core.messages import BaseMessage, HumanMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 from typing import TypedDict, Literal, Annotated
 from pydantic import BaseModel, Field
@@ -40,3 +40,13 @@ graph.add_edge('chat_node', END)
 
 # Compile the graph
 chatbot = graph.compile(checkpointer=checkpointer)
+
+# In stream method there are two objects metadata nand message_chunk so we need to unwrap
+                            # Have to be Implemented on Frontend
+# for message_chunk, metadata in chatbot.stream(
+#     {'messages' : [HumanMessage(content='What is the recipie to make maggie')]},
+#     config = {'configurable' : {'thread_id' : 1}},
+#     stream_mode='messages'
+# ):
+#     if message_chunk.content:
+#         print(message_chunk.content, end= " ", flush= True)
